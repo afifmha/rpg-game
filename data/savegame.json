@@ -1,0 +1,240 @@
+{
+    "nama": "Apip",
+    "hp": 100,
+    "max_hp": 100,
+    "attack": 30,
+    "defend": 15,
+    "inventory": [
+        {
+            "nama": "Potion 10%",
+            "tipe": "Potion",
+            "efek": 10,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Uncommon"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 10%",
+            "tipe": "Potion",
+            "efek": 10,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Uncommon"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Pedang Kayu",
+            "tipe": "Weapon",
+            "efek": 2,
+            "jenis_efek": "ATK",
+            "rarity": "Uncommon"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 25%",
+            "tipe": "Potion",
+            "efek": 25,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Rare"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Armor Kulit",
+            "tipe": "Armor",
+            "efek": 2.5,
+            "jenis_efek": "DEF",
+            "rarity": "Uncommon"
+        },
+        {
+            "nama": "Potion 25%",
+            "tipe": "Potion",
+            "efek": 25,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Rare"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "Pedang Kayu",
+            "tipe": "Weapon",
+            "efek": 2,
+            "jenis_efek": "ATK",
+            "rarity": "Uncommon"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 25%",
+            "tipe": "Potion",
+            "efek": 25,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Rare"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 10%",
+            "tipe": "Potion",
+            "efek": 10,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Uncommon"
+        },
+        {
+            "nama": "HP Potion 10%",
+            "tipe": "Potion",
+            "efek": 10,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Uncommon"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        },
+        {
+            "nama": "HP Potion 5%",
+            "tipe": "Potion",
+            "efek": 5,
+            "jenis_efek": "Pemulihan Darah",
+            "rarity": "Common"
+        }
+    ]
+}

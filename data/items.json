@@ -1,0 +1,79 @@
+{
+  "potion_5": {
+    "nama": "HP Potion 5%",
+    "tipe": "Potion",
+    "efek": 5,
+    "jenis_efek": "Pemulihan Darah",
+    "rarity": "Common"
+  },
+  "potion_10": {
+    "nama": "HP Potion 10%",
+    "tipe": "Potion",
+    "efek": 10,
+    "jenis_efek": "Pemulihan Darah",
+    "rarity": "Uncommon"
+  },
+  "potion_25": {
+    "nama": "HP Potion 25%",
+    "tipe": "Potion",
+    "efek": 25,
+    "jenis_efek": "Pemulihan Darah",
+    "rarity": "Rare"
+  },
+  "potion_50": {
+    "nama": "HP Potion 50%",
+    "tipe": "Potion",
+    "efek": 50,
+    "jenis_efek": "Pemulihan Darah",
+    "rarity": "Legendary"
+  },
+  "potion_100": {
+    "nama": "HP Potion 100%",
+    "tipe": "Potion",
+    "efek": 100,
+    "jenis_efek": "Pemulihan Darah",
+    "rarity": "Immortal"
+  },
+  "pedang_kayu": {
+    "nama": "Pedang Kayu",
+    "tipe": "Weapon",
+    "efek": 2,
+    "jenis_efek": "ATK",
+    "rarity": "Uncommon"
+  },
+  "pedang_besi": {
+    "nama": "Pedang Besi",
+    "tipe": "Weapon",
+    "efek": 5,
+    "jenis_efek": "ATK",
+    "rarity": "Rare"
+  },
+  "pedang_emas": {
+    "nama": "Pedang Emas",
+    "tipe": "Weapon",
+    "efek": 7.5,
+    "jenis_efek": "ATK",
+    "rarity": "Legendary"
+  },
+  "armor_kulit": {
+    "nama": "Armor Kulit",
+    "tipe": "Armor",
+    "efek": 2.5,
+    "jenis_efek": "DEF",
+    "rarity": "Uncommon"
+  },
+  "armor_besi": {
+    "nama": "Armor Besi",
+    "tipe": "Armor",
+    "efek": 5.5,
+    "jenis_efek": "DEF",
+    "rarity": "Rare"
+  },
+  "armor_emas": {
+    "nama": "Armor Emas",
+    "tipe": "Armor",
+    "efek": 9,
+    "jenis_efek": "DEF",
+    "rarity": "Legendary"
+  }
+}

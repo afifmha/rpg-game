@@ -1,0 +1,85 @@
+{
+  "slime": {
+    "nama": "Slime",
+    "hp": 7.5,
+    "max_hp": 7.5,
+    "attack": 1,
+    "defend": 0,
+    "drop_list": [
+      "Common"
+    ]
+  },
+  "undead": {
+    "nama": "Undead",
+    "hp": 15,
+    "max_hp": 15,
+    "attack": 3,
+    "defend": 0.5,
+    "drop_list": [
+      "Common",
+      "Uncommon"
+    ]
+  },
+  "zombie": {
+    "nama": "Zombie",
+    "hp": 20,
+    "max_hp": 20,
+    "attack": 2,
+    "defend": 0.5,
+    "drop_list": [
+      "Common",
+      "Uncommon"
+    ]
+  },
+  "orc": {
+    "nama": "Orc",
+    "hp": 40,
+    "max_hp": 40,
+    "attack": 10,
+    "defend": 8,
+    "drop_list": [
+      "Common",
+      "Uncommon",
+      "Rare"
+    ]
+  },
+  "golem": {
+    "nama": "Golem",
+    "hp": 45,
+    "max_hp": 40,
+    "attack": 10,
+    "defend": 13,
+    "drop_list": [
+      "Common",
+      "Uncommon",
+      "Rare"
+    ]
+  },
+  "cerberus": {
+    "nama": "Cerberus (Mini Boss)",
+    "hp": 125,
+    "max_hp": 125,
+    "attack": 17.5,
+    "defend": 16,
+    "drop_list": [
+      "Common",
+      "Uncommon",
+      "Rare",
+      "Legendary"
+    ]
+  },
+  "red_dragon": {
+    "nama": "Red Dragon (Boss)",
+    "hp": 250,
+    "max_hp": 250,
+    "attack": 30,
+    "defend": 20,
+    "drop_list": [
+      "Common",
+      "Uncommon",
+      "Rare",
+      "Legendary",
+      "Immortal"
+    ]
+  }
+}
