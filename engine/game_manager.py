@@ -102,13 +102,25 @@ class GameManager:
         return []
 
     def buka_inventory(self, player):
-        if not player.inventory:
+        if not player.inventory and not player.weapon and not player.armor:
             print(locale_manager.t("bag_empty"))
             return False
 
         print("\n===========================")
         print(locale_manager.t("potion_title"))
         print("===========================")
+
+        actions_map = {}
+
+        if player.weapon:
+            label = f"[Equipped Weapon] {player.weapon.nama} ({locale_manager.t('unequip_action', nama=player.weapon.nama)})"
+            print(f"w. {label}")
+            actions_map["w"] = ("unequip_weapon", None)
+
+        if player.armor:
+            label = f"[Equipped Armor] {player.armor.nama} ({locale_manager.t('unequip_action', nama=player.armor.nama)})"
+            print(f"a. {label}")
+            actions_map["a"] = ("unequip_armor", None)
 
         # Group items by name
         grouped_inventory = {}
@@ -134,22 +146,29 @@ class GameManager:
                     jenis_efek=item.jenis_efek,
                 )
             )
+            actions_map[str(idx)] = ("use_or_equip", item)
 
         print(locale_manager.t("go_back"))
-        pilihan = input(locale_manager.t("choose_item")).strip()
+        pilihan = input(locale_manager.t("choose_item")).strip().lower()
 
-        if pilihan == "0" or not pilihan.isdigit():
+        if pilihan == "0":
             return False
 
-        idx = int(pilihan) - 1
-        if 0 <= idx < len(unique_items):
-            item_terpilih = unique_items[idx]
-            if item_terpilih.tipe.lower() in ["potion", "consumable"]:
-                player.use_consumable(item_terpilih)
+        if pilihan in actions_map:
+            action_type, target = actions_map[pilihan]
+            if action_type == "unequip_weapon":
+                player.unequip_weapon()
                 return True
-            elif item_terpilih.tipe.lower() in ["weapon", "armor"]:
-                player.equip_item(item_terpilih)
+            elif action_type == "unequip_armor":
+                player.unequip_armor()
                 return True
+            elif action_type == "use_or_equip":
+                if target.tipe.lower() in ["potion", "consumable"]:
+                    player.use_consumable(target)
+                    return True
+                elif target.tipe.lower() in ["weapon", "armor"]:
+                    player.equip_item(target)
+                    return True
 
         print(locale_manager.t("invalid_selection"))
         return False

@@ -47,7 +47,27 @@ class Hero(Karakter):
         print(locale_manager.t("status_hp", hp=self.hp, max_hp=self.max_hp))
         print(locale_manager.t("status_atk", attack=self.total_attack()))
         print(locale_manager.t("status_def", defend=self.total_armor()))
+        print(locale_manager.t("status_weapon", weapon=self.weapon.nama if self.weapon else "-"))
+        print(locale_manager.t("status_armor", armor=self.armor.nama if self.armor else "-"))
         print("----------------------------")
+
+    def unequip_weapon(self):
+        if self.weapon:
+            weapon = self.weapon
+            self.weapon = None
+            self.inventory.append(weapon)
+            print(locale_manager.t("unequip_success", nama=weapon.nama))
+            return True
+        return False
+
+    def unequip_armor(self):
+        if self.armor:
+            armor = self.armor
+            self.armor = None
+            self.inventory.append(armor)
+            print(locale_manager.t("unequip_success", nama=armor.nama))
+            return True
+        return False
 
     def tampilkan_inventory(self):
         print("\n===========================")
