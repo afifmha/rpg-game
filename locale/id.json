@@ -38,7 +38,7 @@
   "potion_title": "    POTION & CONSUMABLES      ",
   "potion_item_line": "{no}. {nama} (x{qty}) [{tipe}] -> +{efek} {jenis_efek}",
   "go_back": "0. Kembali",
-  "choose_item": "Pilih item: ",
+  "choose_item": "Pilih item (0 / 'batal' untuk kembali): ",
   "invalid_selection": "❌ Pilihan tidak valid.",
   "monster_not_found": "Monster dengan key '{monster_key}' tidak ditemukan di database sistem!",
   "battle_start": "\n[BATTLE START] {player} vs {monster}!",
@@ -76,10 +76,12 @@
   "allocate_menu_wis": "5. WIS (Pot. Heal +1%) - Sekarang: {val}",
   "allocate_menu_cha": "6. CHA (Crit +0.5%) - Sekarang: {val}",
   "allocate_menu_done": "0. Selesai",
-  "allocate_menu_choice": "Pilih stat untuk ditingkatkan: ",
+  "allocate_menu_choice": "Pilih stat untuk ditingkatkan (0 / 'batal' untuk selesai): ",
   "allocate_no_points": "Anda tidak memiliki poin stat yang tersisa!",
   "battle_exp_gained": "✨ Anda mendapatkan {exp} EXP!",
   "battle_level_up": "🆙 LEVEL UP! Anda naik ke Level {level}! Poin Status +5! HP & MP dipulihkan sepenuhnya!",
   "battle_dodge_msg": "💨 {attacker} mencoba menyerang, tetapi {defender} berhasil menghindar!",
-  "battle_crit_msg": "🎯 CRITICAL HIT!"
+  "battle_crit_msg": "🎯 CRITICAL HIT!",
+  "use_qty_prompt": "Masukkan jumlah yang ingin digunakan (1-{max_qty}) (0 / 'batal' untuk membatalkan): ",
+  "allocate_qty_prompt": "Masukkan jumlah poin yang ingin dialokasikan (1-{max_pts}) (0 / 'batal' untuk membatalkan): "
 }

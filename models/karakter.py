@@ -115,32 +115,37 @@ class Hero(Karakter):
             print(locale_manager.t("allocate_menu_done"))
 
             pilihan = input(locale_manager.t("allocate_menu_choice")).strip()
-            if pilihan == "0":
+            if pilihan == "0" or pilihan.lower() in ["batal", "cancel", ""]:
                 break
-            elif pilihan == "1":
-                self.str_attr += 1
-                self.stat_points -= 1
-            elif pilihan == "2":
-                self.dex_attr += 1
-                self.stat_points -= 1
-            elif pilihan == "3":
-                self.con_attr += 1
-                self.stat_points -= 1
-                # Update Max HP and current HP
-                self.max_hp += 10
-                self.hp += 10
-            elif pilihan == "4":
-                self.int_attr += 1
-                self.stat_points -= 1
-                # Update Max MP and current MP
-                self.max_mp += 5
-                self.mp += 5
-            elif pilihan == "5":
-                self.wis_attr += 1
-                self.stat_points -= 1
-            elif pilihan == "6":
-                self.cha_attr += 1
-                self.stat_points -= 1
+            
+            if pilihan in ["1", "2", "3", "4", "5", "6"]:
+                max_pts = self.stat_points
+                qty_input = input(locale_manager.t("allocate_qty_prompt", max_pts=max_pts)).strip().lower()
+                if qty_input == "0" or qty_input in ["batal", "cancel", ""]:
+                    continue
+                
+                qty_to_add = 1
+                if qty_input.isdigit():
+                    qty_to_add = min(max_pts, max(1, int(qty_input)))
+
+                if pilihan == "1":
+                    self.str_attr += qty_to_add
+                elif pilihan == "2":
+                    self.dex_attr += qty_to_add
+                elif pilihan == "3":
+                    self.con_attr += qty_to_add
+                    self.max_hp += qty_to_add * 10
+                    self.hp += qty_to_add * 10
+                elif pilihan == "4":
+                    self.int_attr += qty_to_add
+                    self.max_mp += qty_to_add * 5
+                    self.mp += qty_to_add * 5
+                elif pilihan == "5":
+                    self.wis_attr += qty_to_add
+                elif pilihan == "6":
+                    self.cha_attr += qty_to_add
+
+                self.stat_points -= qty_to_add
             else:
                 print(locale_manager.t("invalid_selection"))
 

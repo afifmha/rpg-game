@@ -21,7 +21,7 @@
   "inventory_title": "         INVENTORY        ",
   "inventory_weapon": "Weapon: {weapon}",
   "inventory_armor": "Armor: {armor}",
-  "inventory_item_line": "{no}. {nama} (x{qty} pcs) - Type: {tipe} (Effect: +{efek} {jenis_efek})",
+  "inventory_item_line": "{no}. {nama} (x{qty} pcs) - Type: {tipe} (Effect: +{efek}% {jenis_efek})",
   "inventory_empty": "\nYour Inventory is Empty\n",
   "unequip_success": "{nama} unequipped successfully",
   "equip_weapon_success": "⚔️ Successfully equipped Weapon: {nama} (+{efek} {jenis_efek})!",
@@ -38,7 +38,7 @@
   "potion_title": "    POTIONS & CONSUMABLES      ",
   "potion_item_line": "{no}. {nama} (x{qty}) [{tipe}] -> +{efek} {jenis_efek}",
   "go_back": "0. Back",
-  "choose_item": "Choose item: ",
+  "choose_item": "Choose item (0 / 'cancel' to go back): ",
   "invalid_selection": "❌ Invalid selection.",
   "monster_not_found": "Monster with key '{monster_key}' not found in system database!",
   "battle_start": "\n[BATTLE START] {player} vs {monster}!",
@@ -76,10 +76,12 @@
   "allocate_menu_wis": "5. WIS (Pot. Heal +1%) - Current: {val}",
   "allocate_menu_cha": "6. CHA (Crit +0.5%) - Current: {val}",
   "allocate_menu_done": "0. Done",
-  "allocate_menu_choice": "Select stat to increase: ",
+  "allocate_menu_choice": "Select stat to increase (0 / 'cancel' to finish): ",
   "allocate_no_points": "You have no stat points left!",
   "battle_exp_gained": "✨ You gained {exp} EXP!",
   "battle_level_up": "🆙 LEVEL UP! You reached Level {level}! Stat Points +5! HP & MP fully restored!",
   "battle_dodge_msg": "💨 {attacker} tries to attack, but {defender} successfully dodges!",
-  "battle_crit_msg": "🎯 CRITICAL HIT!"
+  "battle_crit_msg": "🎯 CRITICAL HIT!",
+  "use_qty_prompt": "Enter quantity to use (1-{max_qty}) (0 / 'cancel' to abort): ",
+  "allocate_qty_prompt": "Enter amount of points to allocate (1-{max_pts}) (0 / 'cancel' to abort): "
 }

@@ -101,7 +101,7 @@ class GameManager:
             return [item_obj]
         return []
 
-    def buka_inventory(self, player):
+    def buka_inventory(self, player, in_battle=False):
         if not player.inventory and not player.weapon and not player.armor:
             print(locale_manager.t("bag_empty"))
             return False
@@ -127,8 +127,13 @@ class GameManager:
         for item in player.inventory:
             if item.nama in grouped_inventory:
                 grouped_inventory[item.nama]["qty"] += 1
+                grouped_inventory[item.nama]["items"].append(item)
             else:
-                grouped_inventory[item.nama] = {"item_object": item, "qty": 1}
+                grouped_inventory[item.nama] = {
+                    "item_object": item,
+                    "qty": 1,
+                    "items": [item]
+                }
 
         unique_items = []
         for idx, (nama_item, data) in enumerate(grouped_inventory.items(), 1):
@@ -151,7 +156,7 @@ class GameManager:
         print(locale_manager.t("go_back"))
         pilihan = input(locale_manager.t("choose_item")).strip().lower()
 
-        if pilihan == "0":
+        if pilihan == "0" or pilihan in ["batal", "cancel", ""]:
             return False
 
         if pilihan in actions_map:
@@ -164,6 +169,22 @@ class GameManager:
                 return True
             elif action_type == "use_or_equip":
                 if target.tipe.lower() in ["potion", "consumable"]:
+                    if not in_battle:
+                        group = grouped_inventory.get(target.nama)
+                        max_qty = group["qty"] if group else 1
+                        if max_qty > 1:
+                            qty_input = input(locale_manager.t("use_qty_prompt", max_qty=max_qty)).strip()
+                            if qty_input == "0" or qty_input.lower() in ["batal", "cancel", ""]:
+                                return False
+                            qty_to_use = 1
+                            if qty_input.isdigit():
+                                qty_to_use = min(max_qty, max(1, int(qty_input)))
+                            
+                            items_to_use = group["items"][:qty_to_use]
+                            for item_to_use in items_to_use:
+                                player.use_consumable(item_to_use)
+                            return True
+                    
                     player.use_consumable(target)
                     return True
                 elif target.tipe.lower() in ["weapon", "armor"]:
@@ -269,7 +290,7 @@ class GameManager:
                     action_done = True
 
                 case "2":
-                    action_done = self.buka_inventory(player)
+                    action_done = self.buka_inventory(player, in_battle=True)
                     if not action_done:
                         print(locale_manager.t("battle_cancel_item"))
                         continue
