@@ -1,48 +1,60 @@
 import random
 from models.karakter import Hero
 from engine.game_manager import GameManager
+from engine.locale_manager import locale_manager
 
 
-def MainMenu():
+def main_menu():
     print("\n===========================")
-    print("   RPG CLI - MENU UTAMA   ")
+    print(locale_manager.t("menu_title"))
     print("===========================")
-    print("1. Lihat Status Karakter")
-    print("2. Mulai Petualangan")
-    print("3. Lihat Inventory")
-    print("4. Keluar Game")
+    print(locale_manager.t("menu_status"))
+    print(locale_manager.t("menu_adventure"))
+    print(locale_manager.t("menu_inventory"))
+    print(locale_manager.t("menu_exit"))
     print("----------------------------")
 
 
-gameLogic = GameManager()
-Player = gameLogic.load_data_hero()
+game_logic = GameManager()
+player = game_logic.load_data_hero()
 
-if Player is not None:
-    print(f"Selamat Datang Kembali, {Player.nama}!")
+if player is not None:
+    print(locale_manager.t("welcome_back", nama=player.nama))
 else:
-    print("Selamat Datang di RPG CLI!")
-    nama = input("Masukkan nama karakter Anda : ")
-    hp = 100
+    # Ask for language preference first
+    print("Pilih Bahasa / Select Language:")
+    print("1. Bahasa Indonesia (id)")
+    print("2. English (en)")
+    lang_choice = input("Pilihan / Choice: ").strip()
+    if lang_choice == "2":
+        locale_manager.set_language("en")
+    else:
+        locale_manager.set_language("id")
+
+    print(locale_manager.t("welcome_new"))
+    nama = input(locale_manager.t("input_name"))
+    hp = 100.0
     rand_attack = round(random.uniform(10, 30), 2)
     rand_def = round(random.uniform(5, 15), 2)
 
-    Player = Hero(nama, hp, hp, rand_attack, rand_def)
+    player = Hero(nama, hp, hp, rand_attack, rand_def)
 
 
 while True:
-    MainMenu()
-    pilihanMenu = str(input("Pilih menu yang tersedia diatas: ")).lower()
+    main_menu()
+    pilihan_menu = str(input(locale_manager.t("select_menu"))).lower()
 
-    if pilihanMenu == "1":
-        Player.TampilkanStatus()
-    elif pilihanMenu == "2":
-        monster = gameLogic.cari_musuh(Player)
-        gameLogic.Battle(Player, monster)
-    elif pilihanMenu == "3":
-        Player.TampilkanInventory()
-    elif pilihanMenu == "4" or pilihanMenu == "exit":
-        gameLogic.save_data(Player)
-        print("\nTerima kasih sudah bermain! Sampai jumpa.")
+    if pilihan_menu == "1":
+        player.tampilkan_status()
+    elif pilihan_menu == "2":
+        monster = game_logic.cari_musuh(player)
+        game_logic.Battle(player, monster)
+    elif pilihan_menu == "3":
+        # Allow viewing and managing (using/equipping) items from inventory
+        game_logic.buka_inventory(player)
+    elif pilihan_menu == "4" or pilihan_menu == "exit":
+        game_logic.save_data(player)
+        print(locale_manager.t("exit_message"))
         break
     else:
-        print("\nPilihan tidak valid! cek lagi menu yang tersedia diatas!")
+        print(locale_manager.t("invalid_choice"))
