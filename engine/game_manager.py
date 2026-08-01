@@ -179,12 +179,10 @@ class GameManager:
             print(locale_manager.t("monster_not_found", monster_key=monster_key))
             return
 
-        player.hp = player.max_hp
+        player.hp = player.hp
 
         print(
-            locale_manager.t(
-                "battle_start", player=player.nama, monster=monster.nama
-            )
+            locale_manager.t("battle_start", player=player.nama, monster=monster.nama)
         )
         print(
             locale_manager.t(
@@ -234,6 +232,26 @@ class GameManager:
                                 "battle_defeat_monster", monster=monster.nama
                             )
                         )
+                        # Award EXP
+                        exp_reward = self.monsters_data.get(monster_key, {}).get(
+                            "exp_reward", 10
+                        )
+                        player.exp += exp_reward
+                        print(locale_manager.t("battle_exp_gained", exp=exp_reward))
+
+                        # Level Up Check
+                        while player.exp >= player.next_level_exp:
+                            player.exp -= player.next_level_exp
+                            player.level += 1
+                            player.next_level_exp = player.level * 100
+                            player.stat_points += 5
+                            # Fully restore HP/MP
+                            player.hp = player.max_hp
+                            player.mp = player.max_mp
+                            print(
+                                locale_manager.t("battle_level_up", level=player.level)
+                            )
+
                         hadiah = self.random_drop(monster_key)
                         if hadiah:
                             for item in hadiah:
@@ -272,9 +290,7 @@ class GameManager:
                 )
                 if player.hp <= 0:
                     print(
-                        locale_manager.t(
-                            "battle_defeat_player", monster=monster.nama
-                        )
+                        locale_manager.t("battle_defeat_player", monster=monster.nama)
                     )
                     break
 
@@ -295,6 +311,18 @@ class GameManager:
             "armor": player.armor.to_dict() if player.armor else None,
             "boss_pity": player.boss_pity,
             "lang": locale_manager.current_lang,
+            "level": player.level,
+            "exp": player.exp,
+            "next_level_exp": player.next_level_exp,
+            "stat_points": player.stat_points,
+            "str_attr": player.str_attr,
+            "dex_attr": player.dex_attr,
+            "con_attr": player.con_attr,
+            "int_attr": player.int_attr,
+            "wis_attr": player.wis_attr,
+            "cha_attr": player.cha_attr,
+            "mp": player.mp,
+            "max_mp": player.max_mp,
         }
 
         for item in player.inventory:
@@ -323,6 +351,20 @@ class GameManager:
             defend=save_data["defend"],
         )
         loaded_data.boss_pity = save_data.get("boss_pity", 0)
+
+        # Restore progression and stats
+        loaded_data.level = save_data.get("level", 1)
+        loaded_data.exp = save_data.get("exp", 0)
+        loaded_data.next_level_exp = save_data.get("next_level_exp", 100)
+        loaded_data.stat_points = save_data.get("stat_points", 0)
+        loaded_data.str_attr = save_data.get("str_attr", 0)
+        loaded_data.dex_attr = save_data.get("dex_attr", 0)
+        loaded_data.con_attr = save_data.get("con_attr", 0)
+        loaded_data.int_attr = save_data.get("int_attr", 0)
+        loaded_data.wis_attr = save_data.get("wis_attr", 0)
+        loaded_data.cha_attr = save_data.get("cha_attr", 0)
+        loaded_data.mp = save_data.get("mp", 10)
+        loaded_data.max_mp = save_data.get("max_mp", 10)
 
         w_data = save_data.get("weapon")
         if w_data:

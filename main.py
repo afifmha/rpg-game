@@ -46,6 +46,10 @@ while True:
 
     if pilihan_menu == "1":
         player.tampilkan_status()
+        if player.stat_points > 0:
+            pilihan_allocate = input(locale_manager.t("allocate_prompt")).strip().lower()
+            if pilihan_allocate in ["y", "ya", "yes"]:
+                player.alokasi_stat_points()
     elif pilihan_menu == "2":
         monster = game_logic.cari_musuh(player)
         game_logic.Battle(player, monster)

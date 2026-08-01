@@ -1,3 +1,4 @@
+import random
 from engine.locale_manager import locale_manager
 from models.item import Weapon, Armor, Potion
 
@@ -16,9 +17,24 @@ class Karakter:
         return round(self.defend, 2)
 
     def serang(self, target):
+        # Dodge Check
+        if hasattr(target, "get_dodge_chance"):
+            dodge_chance = target.get_dodge_chance()
+            if random.random() * 100 < dodge_chance:
+                print(locale_manager.t("battle_dodge_msg", attacker=self.nama, defender=target.nama))
+                return round(target.hp, 2)
+
         damage = self.total_attack() - target.total_armor()
         if damage <= 0:
             damage = 1
+
+        # Critical Hit Check
+        if hasattr(self, "get_crit_chance"):
+            crit_chance = self.get_crit_chance()
+            if random.random() * 100 < crit_chance:
+                print(locale_manager.t("battle_crit_msg"))
+                damage *= 2
+
         target.hp = target.hp - damage
         return round(target.hp, 2)
 
@@ -31,43 +47,102 @@ class Hero(Karakter):
         self.weapon = None
         self.armor = None
 
+        # Progression Attributes
+        self.level = 1
+        self.exp = 0
+        self.next_level_exp = 100
+        self.stat_points = 0
+
+        # Basic Stats
+        self.str_attr = 0
+        self.dex_attr = 0
+        self.con_attr = 0
+        self.int_attr = 0
+        self.wis_attr = 0
+        self.cha_attr = 0
+
+        # Mana / MP tracking
+        self.mp = 10
+        self.max_mp = 10
+
     def total_attack(self):
         bonus = self.weapon.efek if self.weapon else 0.0
-        return round(self.attack + bonus, 2)
+        return round(self.attack + self.str_attr + bonus, 2)
 
     def total_armor(self):
         bonus = self.armor.efek if self.armor else 0.0
-        return round(self.defend + bonus, 2)
+        return round(self.defend + (self.con_attr * 0.5) + bonus, 2)
+
+    def get_dodge_chance(self):
+        return round(self.dex_attr * 0.5, 2)
+
+    def get_crit_chance(self):
+        return round(self.cha_attr * 0.5, 2)
 
     def tampilkan_status(self):
         print("\n===========================")
         print(locale_manager.t("status_title"))
         print("===========================")
         print(locale_manager.t("status_name", nama=self.nama))
+        print(locale_manager.t("status_level", level=self.level))
+        print(locale_manager.t("status_exp", exp=self.exp, next_level_exp=self.next_level_exp))
         print(locale_manager.t("status_hp", hp=self.hp, max_hp=self.max_hp))
+        print(locale_manager.t("status_mp", mp=self.mp, max_mp=self.max_mp))
         print(locale_manager.t("status_atk", attack=self.total_attack()))
         print(locale_manager.t("status_def", defend=self.total_armor()))
+        print(locale_manager.t("status_dodge", dodge=self.get_dodge_chance()))
+        print(locale_manager.t("status_crit", crit=self.get_crit_chance()))
         print(locale_manager.t("status_weapon", weapon=self.weapon.nama if self.weapon else "-"))
         print(locale_manager.t("status_armor", armor=self.armor.nama if self.armor else "-"))
         print("----------------------------")
+        print(locale_manager.t("status_points", points=self.stat_points))
 
-    def unequip_weapon(self):
-        if self.weapon:
-            weapon = self.weapon
-            self.weapon = None
-            self.inventory.append(weapon)
-            print(locale_manager.t("unequip_success", nama=weapon.nama))
-            return True
-        return False
+        # Basic RPG stats
+        print(f"STR: {self.str_attr} | DEX: {self.dex_attr} | CON: {self.con_attr}")
+        print(f"INT: {self.int_attr} | WIS: {self.wis_attr} | CHA: {self.cha_attr}")
+        print("----------------------------")
 
-    def unequip_armor(self):
-        if self.armor:
-            armor = self.armor
-            self.armor = None
-            self.inventory.append(armor)
-            print(locale_manager.t("unequip_success", nama=armor.nama))
-            return True
-        return False
+    def alokasi_stat_points(self):
+        while self.stat_points > 0:
+            print("\n" + locale_manager.t("allocate_menu_title"))
+            print(locale_manager.t("allocate_menu_points", points=self.stat_points))
+            print(locale_manager.t("allocate_menu_str", val=self.str_attr))
+            print(locale_manager.t("allocate_menu_dex", val=self.dex_attr))
+            print(locale_manager.t("allocate_menu_con", val=self.con_attr))
+            print(locale_manager.t("allocate_menu_int", val=self.int_attr))
+            print(locale_manager.t("allocate_menu_wis", val=self.wis_attr))
+            print(locale_manager.t("allocate_menu_cha", val=self.cha_attr))
+            print(locale_manager.t("allocate_menu_done"))
+
+            pilihan = input(locale_manager.t("allocate_menu_choice")).strip()
+            if pilihan == "0":
+                break
+            elif pilihan == "1":
+                self.str_attr += 1
+                self.stat_points -= 1
+            elif pilihan == "2":
+                self.dex_attr += 1
+                self.stat_points -= 1
+            elif pilihan == "3":
+                self.con_attr += 1
+                self.stat_points -= 1
+                # Update Max HP and current HP
+                self.max_hp += 10
+                self.hp += 10
+            elif pilihan == "4":
+                self.int_attr += 1
+                self.stat_points -= 1
+                # Update Max MP and current MP
+                self.max_mp += 5
+                self.mp += 5
+            elif pilihan == "5":
+                self.wis_attr += 1
+                self.stat_points -= 1
+            elif pilihan == "6":
+                self.cha_attr += 1
+                self.stat_points -= 1
+            else:
+                print(locale_manager.t("invalid_selection"))
 
     def tampilkan_inventory(self):
         print("\n===========================")
@@ -92,6 +167,24 @@ class Hero(Karakter):
         else:
             print(locale_manager.t("inventory_empty"))
         print("----------------------------")
+
+    def unequip_weapon(self):
+        if self.weapon:
+            weapon = self.weapon
+            self.weapon = None
+            self.inventory.append(weapon)
+            print(locale_manager.t("unequip_success", nama=weapon.nama))
+            return True
+        return False
+
+    def unequip_armor(self):
+        if self.armor:
+            armor = self.armor
+            self.armor = None
+            self.inventory.append(armor)
+            print(locale_manager.t("unequip_success", nama=armor.nama))
+            return True
+        return False
 
     def equip_item(self, item):
         if isinstance(item, Weapon):
@@ -122,7 +215,12 @@ class Hero(Karakter):
             return False
 
         healed = item.use(self)
-        print(locale_manager.t("use_potion_success", nama=item.nama, healed=healed))
+        base_hp = self.hp - healed
+        healed_bonus = round(healed * (1 + self.wis_attr / 100.0), 2)
+        self.hp = min(self.max_hp, base_hp + healed_bonus)
+        final_healed = round(self.hp - base_hp, 2)
+
+        print(locale_manager.t("use_potion_success", nama=item.nama, healed=final_healed))
 
         if item in self.inventory:
             self.inventory.remove(item)

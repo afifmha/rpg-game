@@ -7,7 +7,8 @@
     "defend": 0,
     "drop_list": [
       "Common"
-    ]
+    ],
+    "exp_reward": 15
   },
   "undead": {
     "nama": "Undead",
@@ -18,7 +19,8 @@
     "drop_list": [
       "Common",
       "Uncommon"
-    ]
+    ],
+    "exp_reward": 25
   },
   "zombie": {
     "nama": "Zombie",
@@ -29,7 +31,8 @@
     "drop_list": [
       "Common",
       "Uncommon"
-    ]
+    ],
+    "exp_reward": 35
   },
   "orc": {
     "nama": "Orc",
@@ -41,7 +44,8 @@
       "Common",
       "Uncommon",
       "Rare"
-    ]
+    ],
+    "exp_reward": 65
   },
   "golem": {
     "nama": "Golem",
@@ -53,7 +57,8 @@
       "Common",
       "Uncommon",
       "Rare"
-    ]
+    ],
+    "exp_reward": 80
   },
   "cerberus": {
     "nama": "Cerberus (Mini Boss)",
@@ -66,7 +71,8 @@
       "Uncommon",
       "Rare",
       "Legendary"
-    ]
+    ],
+    "exp_reward": 200
   },
   "red_dragon": {
     "nama": "Red Dragon (Boss)",
@@ -80,6 +86,7 @@
       "Rare",
       "Legendary",
       "Immortal"
-    ]
+    ],
+    "exp_reward": 450
   }
 }
