@@ -55,9 +55,12 @@ class Potion(Consumable):
         super().__init__(nama, "potion", efek, jenis_efek, rarity)
 
     def use(self, character):
-        if self.jenis_efek == "heal":
-            # Potion effects can be absolute or relative (e.g. heal percentage)
-            heal_amount = character.max_hp * self.efek if self.efek < 1.0 else self.efek
+        if self.jenis_efek in ["Pemulihan Darah", "heal"]:
+            # If the effect is a value like 5, 10, 25, 50, 100, we treat it as percentage
+            if self.efek >= 1.0:
+                heal_amount = character.max_hp * (self.efek / 100.0)
+            else:
+                heal_amount = character.max_hp * self.efek
             old_hp = character.hp
             character.hp = min(character.max_hp, character.hp + heal_amount)
             return round(character.hp - old_hp, 2)
