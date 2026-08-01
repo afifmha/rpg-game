@@ -1,23 +1,22 @@
+from engine.locale_manager import locale_manager
+from models.item import Weapon, Armor, Potion
+
 class Karakter:
-    def __init__(
-        self, nama: str, hp: float, max_hp: float, attack: float, defend: float
-    ):
+    def __init__(self, nama: str, hp: float, max_hp: float, attack: float, defend: float):
         self.nama = nama
         self.hp = hp
         self.max_hp = max_hp
         self.attack = attack
         self.defend = defend
 
-    def TotalAttack(self):
-        damage_output = self.attack
-        return round(damage_output, 2)
+    def total_attack(self):
+        return round(self.attack, 2)
 
-    def TotalArmor(self):
-        damage_absord = self.defend
-        return round(damage_absord, 2)
+    def total_armor(self):
+        return round(self.defend, 2)
 
-    def Serang(self, target):
-        damage = self.TotalAttack() - target.TotalArmor()
+    def serang(self, target):
+        damage = self.total_attack() - target.total_armor()
         if damage <= 0:
             damage = 1
         target.hp = target.hp - damage
@@ -25,52 +24,37 @@ class Karakter:
 
 
 class Hero(Karakter):
-    def __init__(
-        self,
-        nama: str,
-        hp: float,
-        max_hp: float,
-        attack: float,
-        defend: float,
-    ):
+    def __init__(self, nama: str, hp: float, max_hp: float, attack: float, defend: float):
         super().__init__(nama, hp, max_hp, attack, defend)
         self.inventory = []
         self.boss_pity = 0
         self.weapon = None
         self.armor = None
 
-    def TotalAttack(self):
-        if self.weapon is not None:
-            damage_output = self.attack + self.weapon.efek
-            return round(damage_output, 2)
-        else:
-            damage_output = self.attack
-        return round(damage_output, 2)
+    def total_attack(self):
+        bonus = self.weapon.efek if self.weapon else 0.0
+        return round(self.attack + bonus, 2)
 
-    def TotalArmor(self):
-        if self.armor is not None:
-            damage_absord = self.defend + self.armor.efek
-            return round(damage_absord, 2)
-        else:
-            damage_absord = self.defend
-        return round(damage_absord, 2)
+    def total_armor(self):
+        bonus = self.armor.efek if self.armor else 0.0
+        return round(self.defend + bonus, 2)
 
-    def TampilkanStatus(self):
+    def tampilkan_status(self):
         print("\n===========================")
-        print("   STATUS KARAKTER ANDA   ")
+        print(locale_manager.t("status_title"))
         print("===========================")
-        print(f"Nama Karakter: {self.nama}")
-        print(f"HP : {self.hp:.2f} / {self.max_hp}")
-        print(f"ATK : {self.attack}")
-        print(f"DEF : {self.defend}")
+        print(locale_manager.t("status_name", nama=self.nama))
+        print(locale_manager.t("status_hp", hp=self.hp, max_hp=self.max_hp))
+        print(locale_manager.t("status_atk", attack=self.total_attack()))
+        print(locale_manager.t("status_def", defend=self.total_armor()))
         print("----------------------------")
 
-    def TampilkanInventory(self):
+    def tampilkan_inventory(self):
         print("\n===========================")
-        print("         INVENTORY        ")
+        print(locale_manager.t("inventory_title"))
         print("===========================")
-        print(f"Weapon: {self.weapon.nama if self.weapon else '-'}")
-        print(f"Armor: {self.armor.nama if self.armor else '-'}")
+        print(locale_manager.t("inventory_weapon", weapon=self.weapon.nama if self.weapon else "-"))
+        print(locale_manager.t("inventory_armor", armor=self.armor.nama if self.armor else "-"))
 
         if len(self.inventory) != 0:
             grouped_inventory = {}
@@ -83,61 +67,43 @@ class Hero(Karakter):
             for nama_item, data in grouped_inventory.items():
                 item = data["item_object"]
                 qty = data["qty"]
-
-                print(
-                    f"{no}. {item.nama} (x{qty} pcs) - Jenis: {item.tipe} (Efek: +{item.efek} {item.jenis_efek})"
-                )
+                print(locale_manager.t("inventory_item_line", no=no, nama=item.nama, qty=qty, tipe=item.tipe.upper(), efek=item.efek, jenis_efek=item.jenis_efek))
                 no += 1
         else:
-            print("\nInventory Anda Kosong\n")
+            print(locale_manager.t("inventory_empty"))
         print("----------------------------")
 
-    def EquipItem(self, item):
-        tipe_item = item.tipe.lower()
-        if tipe_item == "weapon":
+    def equip_item(self, item):
+        if isinstance(item, Weapon):
             if self.weapon is not None:
                 self.inventory.append(self.weapon)
-                print(f"{self.weapon.naam} berhasil dilepas")
-
+                print(locale_manager.t("unequip_success", nama=self.weapon.nama))
             self.weapon = item
             if item in self.inventory:
                 self.inventory.remove(item)
-            print(
-                f"⚔️ Berhasil memakai Senjata: {item.nama} (+{item.efek} {item.jenis_efek})!"
-            )
+            print(locale_manager.t("equip_weapon_success", nama=item.nama, efek=item.efek, jenis_efek=item.jenis_efek))
             return True
-        elif tipe_item == "armor":
+        elif isinstance(item, Armor):
             if self.armor is not None:
                 self.inventory.append(self.armor)
-                print(f"{self.armor.nama} berhasil dilepas")
-
+                print(locale_manager.t("unequip_success", nama=self.armor.nama))
             self.armor = item
             if item in self.inventory:
                 self.inventory.remove(item)
-            print(
-                f"🛡️ Berhasil memakai Armor: {item.nama} (+{item.efek} {item.jenis_efek})!"
-            )
+            print(locale_manager.t("equip_armor_success", nama=item.nama, efek=item.efek, jenis_efek=item.jenis_efek))
             return True
-
         else:
-            print(f"❌ {item.nama} bukan equipment yang bisa dipasang!")
+            print(locale_manager.t("equip_invalid", nama=item.nama))
             return False
 
-    def UseConsumable(self, item):
-        if item.tipe.lower() != "potion":
-            print(f"❌ {item.nama} bukan item consumable atau potion!")
+    def use_consumable(self, item):
+        if not isinstance(item, Potion):
+            print(locale_manager.t("consumable_invalid", nama=item.nama))
             return False
 
-        if item.jenis_efek == "heal":
-            # Jumlah Heal persen karena potionnya heal Persen
-            jumlah_heal = self.max_hp * item.efek if item.efek < 1.0 else item.efek
-            hp_lama = self.hp
-            self.hp = min(self.max_hp, self.hp + jumlah_heal)
-            healed = round(self.hp - hp_lama, 2)
-            print(f"🧪 Memakai {item.nama}, memulihkan {healed} HP!")
+        healed = item.use(self)
+        print(locale_manager.t("use_potion_success", nama=item.nama, healed=healed))
 
-        # HAPUS DARI INVENTORY KARNEA SUDAH DIPAKAI
         if item in self.inventory:
             self.inventory.remove(item)
-
         return True
