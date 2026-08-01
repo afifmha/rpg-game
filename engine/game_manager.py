@@ -110,11 +110,29 @@ class GameManager:
         print(locale_manager.t("potion_title"))
         print("===========================")
 
-        # List all items in inventory
-        items_list = list(player.inventory)
-        for idx, item in enumerate(items_list, 1):
+        # Group items by name
+        grouped_inventory = {}
+        for item in player.inventory:
+            if item.nama in grouped_inventory:
+                grouped_inventory[item.nama]["qty"] += 1
+            else:
+                grouped_inventory[item.nama] = {"item_object": item, "qty": 1}
+
+        unique_items = []
+        for idx, (nama_item, data) in enumerate(grouped_inventory.items(), 1):
+            item = data["item_object"]
+            qty = data["qty"]
+            unique_items.append(item)
             print(
-                f"{idx}. {item.nama} [{item.tipe.upper()}] -> +{item.efek} {item.jenis_efek} ({item.rarity})"
+                locale_manager.t(
+                    "potion_item_line",
+                    no=idx,
+                    nama=item.nama,
+                    qty=qty,
+                    tipe=item.tipe.upper(),
+                    efek=item.efek,
+                    jenis_efek=item.jenis_efek,
+                )
             )
 
         print(locale_manager.t("go_back"))
@@ -124,8 +142,8 @@ class GameManager:
             return False
 
         idx = int(pilihan) - 1
-        if 0 <= idx < len(items_list):
-            item_terpilih = items_list[idx]
+        if 0 <= idx < len(unique_items):
+            item_terpilih = unique_items[idx]
             if item_terpilih.tipe.lower() in ["potion", "consumable"]:
                 player.use_consumable(item_terpilih)
                 return True
